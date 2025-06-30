@@ -6,7 +6,7 @@ import Chat from './pages/Chat'
 function App() {
   return (
     <BrowserRouter>
-      <div style={{marginBottom:20}}>
+      <div style={{ marginBottom: 20 }}>
         <Link to="/">DB</Link> | <Link to="/storage">Storage</Link> | <Link to="/chat">Chat</Link>
       </div>
 
