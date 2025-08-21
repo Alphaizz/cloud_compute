@@ -4,8 +4,8 @@ import { supabase } from '../../supabaseClient';
 import { useAuth } from '../context/AuthContext.jsx';
 
 // Import the jsPDF library for PDF generation
+import '../Chat.css'; 
 import { jsPDF } from "jspdf";
-
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import {
   MainContainer,
@@ -193,7 +193,6 @@ export default function Chat() {
             return;
         }
       } else if (botReply.includes("[CREATE_BOOKING]")) {
-        // --- FIX: Updated regex to capture the optional tableName ---
         const match = botReply.match(/\[CREATE_BOOKING\]dateTime:(.*?),partySize:(\d+),name:(.*?),contact:(.*?)(?:,tableName:(.*?))?\[\/CREATE_BOOKING\]/s);
         if (match) {
             const [_, dateTimeStr, partySizeStr, customerName, customerContact, requestedTableName] = match;
@@ -259,24 +258,24 @@ export default function Chat() {
   }
 
   return (
-    <div>
-      <div style={{ padding: '10px', textAlign: 'center', border: '1px solid #ccc', margin: '10px' }}>
-        <button onClick={handleNewChat} style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer', border: '1px solid #007bff', backgroundColor: '#007bff', color: 'white', borderRadius: '5px' }}>
+    <div className="chat-app-container">
+      <div style={{ padding: '10px', textAlign: 'center', border: '1px solid #1d1c1cff', margin: '10px', backgroundColor: '#1d1c1cff' }}>
+        <button onClick={handleNewChat} style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer', border: '1px solid #ff8c00ff', backgroundColor: '#ff8c00ff', color: 'white', borderRadius: '5px' }}>
           Start New Chat
         </button>
       </div>
-      <div style={{ position: "relative", height: "500px" }}>
+      <div className='chat-wrapper'>
         <MainContainer>
-          <ChatContainer>
-            <MessageList typingIndicator={isTyping ? <TypingIndicator content="Assistant is thinking..." /> : null}>
+          <ChatContainer style={{ backgroundColor: "#1d1c1cff" }}>
+            <MessageList typingIndicator={isTyping ? <TypingIndicator content="Assistant is thinking..." /> : null }>
               {messages.map((msg, index) => (
                 <React.Fragment key={index}>
                     <Message model={msg} />
                     {msg.booking_id && msg.direction === 'incoming' && (
-                        <div style={{ display: 'flex', justifyContent: 'flex-start', paddingLeft: '10px', marginTop: '-5px', marginBottom: '10px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'flex-start', paddingLeft: '10px', marginTop: '-5px', marginBottom: '10px'}}>
                             <button 
                                 onClick={() => handlePrintBooking(msg.booking_id)}
-                                style={{ padding: '5px 15px', fontSize: '12px', cursor: 'pointer', border: '1px solid #198754', backgroundColor: '#198754', color: 'white', borderRadius: '5px' }}
+                                style={{ padding: '5px 15px', fontSize: '12px', cursor: 'pointer', border: '1px solid #ff8c00', backgroundColor: '#ff8c00', color: 'white', borderRadius: '5px' }}
                             >
                                 Print Confirmation
                             </button>
